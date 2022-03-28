@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
@@ -273,12 +274,15 @@ func parseCloudToDeviceTopic(s string) (map[string]string, error) {
 		return nil, errors.New("malformed cloud-to-device topic name")
 	}
 
-	s = strings.ReplaceAll(s, "; ", "_ ")
-
-	q, err := url.ParseQuery(s[i:])
+	req, err := http.NewRequest("POST", s, nil)
 	if err != nil {
 		return nil, err
 	}
+	err = req.ParseForm()
+	if err != nil {
+		return nil, err
+	}
+	q := req.Form
 
 	p := make(map[string]string, len(q))
 	for k, v := range q {
