@@ -272,6 +272,9 @@ func parseCloudToDeviceTopic(s string) (map[string]string, error) {
 	if i == -1 {
 		return nil, errors.New("malformed cloud-to-device topic name")
 	}
+
+	s = strings.ReplaceAll(s, "; ", "_ ")
+
 	q, err := url.ParseQuery(s[i:])
 	if err != nil {
 		return nil, err
