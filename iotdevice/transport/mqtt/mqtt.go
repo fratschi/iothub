@@ -295,10 +295,10 @@ func parseQuery(m url.Values, query string) (err error) {
 	for query != "" {
 		var key string
 		key, query, _ = strings.Cut(query, "&")
-		if strings.Contains(key, ";") {
-			err = fmt.Errorf("invalid semicolon separator in query")
-			continue
-		}
+		//if strings.Contains(key, ";") {
+		//	err = fmt.Errorf("invalid semicolon separator in query")
+		//	continue
+		//}
 		if key == "" {
 			continue
 		}
